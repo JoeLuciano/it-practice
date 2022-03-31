@@ -1,10 +1,16 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import './styles.css';
 
 const svgVariant = {
-  hidden: { opacity: 0 },
+  hidden: { scale: 1, opacity: 0 },
   visible: {
+    scale: 1,
     opacity: 1,
     transition: { duration: 1 },
+  },
+  focus: {
+    scale: 1.1,
   },
 };
 
@@ -20,8 +26,8 @@ const SvgPath = ({ path }) => {
   return (
     <motion.path
       d={path}
-      fill='transparent'
-      strokeWidth='12'
+      fill='rgba(255, 100, 0, 0.69)'
+      strokeWidth='2'
       stroke='rgba(255, 255, 255, 0.69)'
       strokeLinecap='round'
       variants={pathVariant}
@@ -29,13 +35,37 @@ const SvgPath = ({ path }) => {
   );
 };
 
-export const Melon = () => {
+function convertRemToScaledPixels(remString) {
+  const remValue = remString.replace('rem', '');
+  const remInt = parseInt(remValue);
+  const fontPixelSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize
+  );
+  const sizeInPixels = remInt * fontPixelSize;
+  const MagicNumber = 700;
+  return sizeInPixels * (MagicNumber / sizeInPixels);
+}
+
+export const Melon = ({ size = '10rem' }) => {
+  const controls = useAnimation();
+  const [viewPixelSize, setViewPixelSize] = useState(0);
+  useEffect(() => {
+    if (size) {
+      setViewPixelSize(convertRemToScaledPixels(size));
+    }
+  }, [size]);
+
   return (
     <motion.svg
+      className='svg'
       xmlns='http://www.w3.org/2000/svg'
-      width='451'
-      height='437'
-      variants={svgVariant}>
+      width={size}
+      height={size}
+      viewBox={`0 -100 ${viewPixelSize} ${viewPixelSize}`}
+      variants={svgVariant}
+      animate={controls}
+      onHoverStart={() => controls.start('focus')}
+      onHoverEnd={() => controls.start('visible')}>
       <SvgPath
         path='M104 426 c5 -14 2 -17 -9 -12 -9 3 -13 2 -10 -4 3 -6 1 -10 -6 -10
         -16 0 -6 -124 12 -147 8 -9 9 -14 3 -10 -6 3 -11 0 -11 -8 0 -8 4 -12 8 -9 10

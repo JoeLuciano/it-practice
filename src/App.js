@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Melon } from './components/symbolsSVGs/Melon';
+import melonSvg from './svgImages/Melon.svg';
 import './App.css';
 
 const SvgPage = (props) => {
@@ -25,7 +26,11 @@ const SvgRow = (props) => {
       transition: { staggerChildren: 0.5 },
     },
   };
-  return <motion.div variants={svgRow}>{props.children}</motion.div>;
+  return (
+    <motion.div className='svgRow' variants={svgRow}>
+      {props.children}
+    </motion.div>
+  );
 };
 
 function App() {
@@ -33,7 +38,7 @@ function App() {
     <div className='app'>
       <SvgPage>
         <SvgRow>
-          <Melon />
+          <Melon size='20rem' />
           <Melon />
           <Melon />
           <Melon />
