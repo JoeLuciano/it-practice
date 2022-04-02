@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Melon } from './components/symbolsSVGs/Melon';
-import melonSvg from './svgImages/Melon.svg';
+import { MoveToGoals } from './components/symbolsSVGs/MoveToGoals';
 import './App.css';
 
 const SvgPage = (props) => {
@@ -8,11 +8,15 @@ const SvgPage = (props) => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.5 },
+      transition: { staggerChildren: 0.3 },
     },
   };
   return (
-    <motion.div variants={svgPage} initial='hidden' animate='visible'>
+    <motion.div
+      className='svg-page'
+      variants={svgPage}
+      initial='hidden'
+      animate='visible'>
       {props.children}
     </motion.div>
   );
@@ -23,7 +27,7 @@ const SvgRow = (props) => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.5 },
+      transition: { staggerChildren: 0.3 },
     },
   };
   return (
@@ -38,16 +42,28 @@ function App() {
     <div className='app'>
       <SvgPage>
         <SvgRow>
-          <Melon size='20rem' />
-          <Melon />
-          <Melon />
-          <Melon />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
         </SvgRow>
         <SvgRow>
-          <Melon />
-          <Melon />
-          <Melon />
-          <Melon />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+        </SvgRow>
+        <SvgRow>
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+        </SvgRow>
+        <SvgRow>
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
+          <MoveToGoals size='10rem' />
         </SvgRow>
       </SvgPage>
     </div>

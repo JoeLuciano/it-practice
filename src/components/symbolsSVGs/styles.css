@@ -1,3 +1,8 @@
 .svg {
   border: solid 2px white;
 }
+
+.test {
+  width: 20rem;
+  height: 20rem;
+}
