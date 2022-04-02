@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import './styles.css';
 
 const svgVariant = {
   hidden: { scale: 1, opacity: 0 },
