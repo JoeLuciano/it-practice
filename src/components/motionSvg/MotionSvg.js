@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
 const containerVariant = {
@@ -9,21 +9,54 @@ const containerVariant = {
 };
 
 const draw = {
-  hidden: { pathLength: 0 },
+  hidden: { opacity: 0, pathLength: 0 },
   visible: {
+    opacity: 1,
     pathLength: 1,
     transition: {
       pathLength: {
         type: 'spring',
-        duration: 1.5,
+        duration: 2,
         bounce: 0,
       },
-      duration: 2,
+      opacity: {
+        duration: 0.1,
+      },
     },
   },
 };
 
-export const MotionSvg = (props) => {
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
+export const MotionSvg = ({ size, ...props }) => {
+  const { height, width } = useWindowDimensions();
   const [allowHover, setAllowHover] = React.useState(false);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
@@ -39,18 +72,27 @@ export const MotionSvg = (props) => {
   });
 
   React.useEffect(() => {
-    setAllowHover(true);
+    async function enableHover() {
+      await delay(3000);
+      setAllowHover(true);
+    }
+    enableHover();
   }, []);
 
   const controls = useAnimation();
+  const svgSize = size ? size : width < 900 ? width / 6 : width / 18;
 
   return (
     <motion.div
-      style={{ height: props.size, width: props.size }}
+      style={{ height: svgSize, width: svgSize }}
       variants={containerVariant}
-      {...(allowHover ? { animate: controls } : {})}
-      onHoverStart={() => controls.start('focus')}
-      onHoverEnd={() => controls.start('visible')}>
+      {...(allowHover
+        ? {
+            animate: controls,
+            onHoverStart: () => controls.start('focus'),
+            onHoverEnd: () => controls.start('visible'),
+          }
+        : {})}>
       <motion.svg
         width='150'
         height='150'
