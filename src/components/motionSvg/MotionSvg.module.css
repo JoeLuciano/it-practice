@@ -1,0 +1,9 @@
+.svgContainer {
+    position: relative;
+    background: rgb(196, 0, 0);
+}
+
+.descriptionContainer {
+    position: absolute;
+    background: white;
+}

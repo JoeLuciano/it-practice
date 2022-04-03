@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import styles from './SvgRow.module.css';
 
 const svgRow = {
   hidden: { opacity: 0 },
@@ -10,7 +11,7 @@ const svgRow = {
 
 export const SvgRow = (props) => {
   return (
-    <motion.div className='svgRow' variants={svgRow}>
+    <motion.div className={styles.svgRow} variants={svgRow}>
       {props.children}
     </motion.div>
   );

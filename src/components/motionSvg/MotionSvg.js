@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import styles from './MotionSvg.module.css';
 
 const containerVariant = {
   visible: { scale: 1 },
@@ -30,34 +31,13 @@ function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowDimensions;
-}
+const description = () => {
+  return <motion.div className={styles.descriptionContainer}>test</motion.div>;
+};
 
 export const MotionSvg = ({ size, ...props }) => {
-  const { height, width } = useWindowDimensions();
   const [allowHover, setAllowHover] = React.useState(false);
+  const [hoverActive, setHoverActive] = React.useState(false);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
@@ -80,25 +60,24 @@ export const MotionSvg = ({ size, ...props }) => {
   }, []);
 
   const controls = useAnimation();
-  const svgSize = size
-    ? size
-    : width < 550
-    ? width / 6
-    : width < 1100
-    ? width / 14
-    : width < 1500
-    ? width / 18
-    : width / 22;
+  const svgSize = size ? size : '100%';
 
   return (
     <motion.div
+      className={styles.svgContainer}
       style={{ height: svgSize, width: svgSize }}
       variants={containerVariant}
       {...(allowHover
         ? {
             animate: controls,
-            onHoverStart: () => controls.start('focus'),
-            onHoverEnd: () => controls.start('visible'),
+            onHoverStart: () => {
+              controls.start('focus');
+              setHoverActive(true);
+            },
+            onHoverEnd: () => {
+              controls.start('visible');
+              setHoverActive(false);
+            },
           }
         : {})}>
       <motion.svg
