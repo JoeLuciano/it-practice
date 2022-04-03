@@ -80,7 +80,15 @@ export const MotionSvg = ({ size, ...props }) => {
   }, []);
 
   const controls = useAnimation();
-  const svgSize = size ? size : width < 900 ? width / 6 : width / 18;
+  const svgSize = size
+    ? size
+    : width < 550
+    ? width / 6
+    : width < 1100
+    ? width / 14
+    : width < 1500
+    ? width / 18
+    : width / 22;
 
   return (
     <motion.div

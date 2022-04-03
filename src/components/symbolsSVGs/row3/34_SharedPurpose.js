@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { MotionSvg } from '../motionSvg/MotionSvg';
+import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
-export const SharedPrupose = ({ size }) => {
+export const SharedPurpose = ({ size }) => {
   return (
     <MotionSvg size={size}>
       <motion.path

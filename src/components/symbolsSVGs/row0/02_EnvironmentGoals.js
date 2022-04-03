@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { MotionSvg } from '../motionSvg/MotionSvg';
+import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
-export const MoveToGoals = ({ size }) => {
+export const EnvironmentGoals = ({ size }) => {
   return (
     <MotionSvg size={size}>
       <motion.rect

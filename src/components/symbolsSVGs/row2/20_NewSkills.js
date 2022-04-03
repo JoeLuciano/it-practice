@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MotionSvg } from '../motionSvg/MotionSvg';
+import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const NewSkills = ({ size }) => {
   return (

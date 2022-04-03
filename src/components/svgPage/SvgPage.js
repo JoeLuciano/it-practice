@@ -1,22 +1,10 @@
 import { motion } from 'framer-motion';
 
-import { Limitless } from './../symbolsSVGs/00_Limitless';
-import { ShareLessons } from './../symbolsSVGs/01_ShareLessons';
-import { MoveToGoals } from './../symbolsSVGs/02_MoveToGoals';
-import { FastPig } from './../symbolsSVGs/03_FastPig';
-import { Passion } from './../symbolsSVGs/04_Passion';
-
-import { PersonalGrowth } from './../symbolsSVGs/10_PersonalGrowth';
-import { Luck } from './../symbolsSVGs/14_Luck';
-
-import { NewSkills } from './../symbolsSVGs/20_NewSkills';
-import { Passion2 } from './../symbolsSVGs/24_Passion2';
-
-import { Focus } from './../symbolsSVGs/30_Focus';
-import { SharedPrupose } from './../symbolsSVGs/34_SharedPurpose';
-
-import { Anything } from './../symbolsSVGs/40_Anything';
-import { Commit } from './../symbolsSVGs/44_Commit';
+import { Row0 } from 'components/symbolsSVGs/row0/Row0';
+import { Row1 } from 'components/symbolsSVGs/row1/Row1';
+import { Row2 } from 'components/symbolsSVGs/row2/Row2';
+import { Row3 } from 'components/symbolsSVGs/row3/Row3';
+import { Row4 } from 'components/symbolsSVGs/row4/Row4';
 
 import { TopPriority } from './../symbolsSVGs/54_TopPriority';
 
@@ -24,20 +12,11 @@ import { Progress } from './../symbolsSVGs/64_Progress';
 
 import { Joyful } from './../symbolsSVGs/74_Joyful';
 
-const SvgRow = (props) => {
-  const svgRow = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.3 },
-    },
-  };
-  return (
-    <motion.div className='svgRow' variants={svgRow}>
-      {props.children}
-    </motion.div>
-  );
-};
+import { SafeCommunity } from './../symbolsSVGs/80_SafeCommunity';
+
+import { GreatTeacher } from './../symbolsSVGs/90_GreatTeacher';
+
+import { SvgRow } from 'components/svgRow/SvgRow';
 
 export const SvgPage = () => {
   const svgPage = {
@@ -53,41 +32,11 @@ export const SvgPage = () => {
       variants={svgPage}
       initial='hidden'
       animate='visible'>
-      <SvgRow>
-        <Limitless />
-        <ShareLessons />
-        <MoveToGoals />
-        <FastPig />
-        <Passion />
-      </SvgRow>
-      <SvgRow>
-        <PersonalGrowth />
-        <MoveToGoals />
-        <FastPig />
-        <MoveToGoals />
-        <Luck />
-      </SvgRow>
-      <SvgRow>
-        <NewSkills />
-        <MoveToGoals />
-        <MoveToGoals />
-        <MoveToGoals />
-        <Passion2 />
-      </SvgRow>
-      <SvgRow>
-        <Focus />
-        <ShareLessons />
-        <MoveToGoals />
-        <MoveToGoals />
-        <SharedPrupose />
-      </SvgRow>
-      <SvgRow>
-        <Anything />
-        <Commit />
-        <Commit />
-        <Commit />
-        <Commit />
-      </SvgRow>
+      <Row0 />
+      <Row1 />
+      <Row2 />
+      <Row3 />
+      <Row4 />
       <SvgRow>
         <TopPriority />
         <TopPriority />
@@ -108,6 +57,12 @@ export const SvgPage = () => {
         <Joyful />
         <Joyful />
         <Joyful />
+      </SvgRow>
+      <SvgRow>
+        <SafeCommunity />
+      </SvgRow>
+      <SvgRow>
+        <GreatTeacher />
       </SvgRow>
     </motion.div>
   );
