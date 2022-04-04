@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
 
 const containerVariant = {
@@ -31,13 +31,36 @@ function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const description = () => {
-  return <motion.div className={styles.descriptionContainer}>test</motion.div>;
+const Description = ({ x, y }) => {
+  const descriptionVariant = {
+    hidden: { opacity: 0 },
+    visible: { x: x, y: y, opacity: 1, transition: { duration: 2 } },
+  };
+  return (
+    <motion.div
+      className={styles.descriptionContainer}
+      variants={descriptionVariant}
+      initial='hidden'
+      animate='visible'>
+      test
+    </motion.div>
+  );
 };
 
 export const MotionSvg = ({ size, ...props }) => {
-  const [allowHover, setAllowHover] = React.useState(false);
-  const [hoverActive, setHoverActive] = React.useState(false);
+  const [allowHover, setAllowHover] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [descriptionX, setDescriptionX] = useState();
+  const [descriptionY, setDescriptionY] = useState();
+
+  const svgRef = useRef(null);
+  useEffect(() => {
+    if (showDescription) {
+      const { x, y } = svgRef.current.getBoundingClientRect();
+      setDescriptionX(x);
+      setDescriptionY(y);
+    }
+  }, [showDescription, svgRef]);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
@@ -51,7 +74,7 @@ export const MotionSvg = ({ size, ...props }) => {
     return child;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function enableHover() {
       await delay(3000);
       setAllowHover(true);
@@ -64,6 +87,7 @@ export const MotionSvg = ({ size, ...props }) => {
 
   return (
     <motion.div
+      ref={svgRef}
       className={styles.svgContainer}
       style={{ height: svgSize, width: svgSize }}
       variants={containerVariant}
@@ -72,15 +96,20 @@ export const MotionSvg = ({ size, ...props }) => {
             animate: controls,
             onHoverStart: () => {
               controls.start('focus');
-              setHoverActive(true);
+              // setHoverActive(true);
+              setShowDescription(true);
             },
             onHoverEnd: () => {
               controls.start('visible');
-              setHoverActive(false);
+              // setHoverActive(false);
+              setShowDescription(false);
             },
           }
         : {})}>
+      {showDescription && <Description x={descriptionX} y={descriptionY} />}
+
       <motion.svg
+        className={styles.svgComponent}
         width='150'
         height='150'
         viewBox='0 0 150 150'

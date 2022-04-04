@@ -1,19 +1,5 @@
-.mobilePage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 10%;
-    background: rgb(196, 0, 0);
-
-}
-
-.desktopPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 40%;
+.svgPage {
+    display: block;
+    margin: 1rem;
+    width: 25rem;
 }

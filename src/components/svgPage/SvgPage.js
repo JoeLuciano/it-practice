@@ -28,19 +28,9 @@ const svgPage = {
 };
 
 export const SvgPage = () => {
-  const [isMobile, setIsMobile] = useState();
-  useEffect(() => {
-    const updateDimensions = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 550);
-    };
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-  }, []);
-
   return (
     <motion.div
-      className={isMobile ? styles.mobilePage : styles.desktopPage}
+      className={styles.svgPage}
       variants={svgPage}
       initial='hidden'
       animate='visible'>
