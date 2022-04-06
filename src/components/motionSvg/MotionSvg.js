@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
+import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
   visible: { zIndex: 0, scale: 1 },
   focus: {
     scale: 1.5,
     zIndex: 20,
-    transition: { delay: 0.2, duration: 0.5 },
   },
 };
 
@@ -33,50 +33,32 @@ function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const Description = ({ x, y }) => {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  const xStart = '-50%';
-  const yStart = '-50%';
-  const xMovement = x > width / 2 ? '-50%' : '50%';
-  const yMovement = y > height / 2 ? '-50%' : '50%';
-  const xEnd = `calc(${xStart} + ${xMovement})`;
-  const yEnd = `calc(${yStart} + ${yMovement})`;
-
-  const descriptionVariant = {
-    hidden: { x: xStart, y: yStart, opacity: 0 },
-    visible: {
-      x: xEnd,
-      y: yEnd,
-      opacity: 1,
-      transition: { delay: 0.2, duration: 1 },
-    },
-  };
-  return (
-    <motion.div
-      className={styles.descriptionContainer}
-      variants={descriptionVariant}
-      initial='hidden'
-      animate='visible'>
-      test
-    </motion.div>
-  );
-};
-
-export const MotionSvg = ({ size, ...props }) => {
+export const MotionSvg = ({ size, description, ...props }) => {
   const [allowHover, setAllowHover] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
+  const [requestDescription, setRequestDescription] = useState(false);
   const [descriptionX, setDescriptionX] = useState();
   const [descriptionY, setDescriptionY] = useState();
 
   const svgRef = useRef(null);
   useEffect(() => {
-    if (showDescription) {
-      const { x, y } = svgRef.current.getBoundingClientRect();
-      setDescriptionX(x);
-      setDescriptionY(y);
+    async function showDescriptionAfterDelay() {
+      await delay(2000);
+      if (requestDescription) {
+        const { x, y } = svgRef.current.getBoundingClientRect();
+        setDescriptionX(x);
+        setDescriptionY(y);
+        setShowDescription(true);
+      } else {
+        setShowDescription(false);
+      }
     }
-  }, [showDescription, svgRef]);
+    if (requestDescription) {
+      showDescriptionAfterDelay();
+    } else {
+      setShowDescription(false);
+    }
+  }, [requestDescription, svgRef]);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
@@ -101,6 +83,28 @@ export const MotionSvg = ({ size, ...props }) => {
   const controls = useAnimation();
   const svgSize = size ? size : '100%';
 
+  const MiniSvg = () => {
+    const miniVariants = {
+      hidden: {},
+      visible: { transition: { delayChildren: 1 } },
+    };
+    return (
+      <motion.svg
+        className={styles.svgComponent}
+        width='150'
+        height='150'
+        viewBox='0 0 150 150'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+        style={{ height: '10rem', width: '10rem' }}
+        variants={miniVariants}
+        initial='hidden'
+        animate='visible'>
+        {childrenWithProps}
+      </motion.svg>
+    );
+  };
+
   return (
     <motion.div
       ref={svgRef}
@@ -112,17 +116,22 @@ export const MotionSvg = ({ size, ...props }) => {
             animate: controls,
             onHoverStart: () => {
               controls.start('focus');
-              // setHoverActive(true);
-              setShowDescription(true);
+              setRequestDescription(true);
             },
             onHoverEnd: () => {
               controls.start('visible');
-              // setHoverActive(false);
-              setShowDescription(false);
+              setRequestDescription(false);
             },
           }
         : {})}>
-      {showDescription && <Description x={descriptionX} y={descriptionY} />}
+      {showDescription && requestDescription && (
+        <DescriptionBox
+          description={description}
+          x={descriptionX}
+          y={descriptionY}
+          MiniSvg={MiniSvg}
+        />
+      )}
 
       <motion.svg
         className={styles.svgComponent}
