@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
 
 const containerVariant = {
-  visible: { scale: 1 },
+  visible: { zIndex: 0, scale: 1 },
   focus: {
-    scale: 1.1,
+    scale: 1.5,
+    zIndex: 20,
+    transition: { delay: 0.2, duration: 0.5 },
   },
 };
 
@@ -32,9 +34,23 @@ function delay(time) {
 }
 
 const Description = ({ x, y }) => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const xStart = '-50%';
+  const yStart = '-50%';
+  const xMovement = x > width / 2 ? '-50%' : '50%';
+  const yMovement = y > height / 2 ? '-50%' : '50%';
+  const xEnd = `calc(${xStart} + ${xMovement})`;
+  const yEnd = `calc(${yStart} + ${yMovement})`;
+
   const descriptionVariant = {
-    hidden: { opacity: 0 },
-    visible: { x: x, y: y, opacity: 1, transition: { duration: 2 } },
+    hidden: { x: xStart, y: yStart, opacity: 0 },
+    visible: {
+      x: xEnd,
+      y: yEnd,
+      opacity: 1,
+      transition: { delay: 0.2, duration: 1 },
+    },
   };
   return (
     <motion.div
