@@ -14,7 +14,11 @@ export const PassionCenter = ({ size }) => {
         strokeWidth='4'
         strokeLinecap='square'
       />
-      <motion.path d='M23 120.5L75.5 29L127.5 120.5H23Z' strokeWidth='4' />
+      <motion.path
+        d='M23 120.5L75.5 29L127.5 120.5H23Z'
+        strokeWidth='4'
+        strokeLinecap='round'
+      />
       <motion.line x1='75.5' y1='62.5' x2='75.5' y2='104.5' strokeWidth='4' />
     </MotionSvg>
   );

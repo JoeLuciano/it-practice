@@ -5,3 +5,13 @@
 
 .svgComponent {
 }
+
+.hoverProgress {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 120%;
+    height: 120%;
+    transform: translate(-50%,-50%);
+    z-index: -1;
+}

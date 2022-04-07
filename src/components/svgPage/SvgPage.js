@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './SvgPage.module.css';
 
@@ -8,16 +7,10 @@ import { Row2 } from 'components/symbolsSVGs/row2/Row2';
 import { Row3 } from 'components/symbolsSVGs/row3/Row3';
 import { Row4 } from 'components/symbolsSVGs/row4/Row4';
 import { Row5 } from 'components/symbolsSVGs/row5/Row5';
-
-import { Progress } from './../symbolsSVGs/64_Progress';
-
-import { Joyful } from './../symbolsSVGs/74_Joyful';
-
-import { SafeCommunity } from './../symbolsSVGs/80_SafeCommunity';
-
-import { GreatTeacher } from './../symbolsSVGs/90_GreatTeacher';
-
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { Row6 } from 'components/symbolsSVGs/row6/Row6';
+import { Row7 } from 'components/symbolsSVGs/row7/Row7';
+import { Row8 } from 'components/symbolsSVGs/row8/Row8';
+import { Row9 } from 'components/symbolsSVGs/row9/Row9';
 
 const svgPage = {
   hidden: { opacity: 0 },
@@ -40,26 +33,10 @@ export const SvgPage = () => {
       <Row3 />
       <Row4 />
       <Row5 />
-      <SvgRow>
-        <Progress />
-        <Progress />
-        <Progress />
-        <Progress />
-        <Progress />
-      </SvgRow>
-      <SvgRow>
-        <Joyful />
-        <Joyful />
-        <Joyful />
-        <Joyful />
-        <Joyful />
-      </SvgRow>
-      <SvgRow>
-        <SafeCommunity />
-      </SvgRow>
-      <SvgRow>
-        <GreatTeacher />
-      </SvgRow>
+      <Row6 />
+      <Row7 />
+      <Row8 />
+      <Row9 />
     </motion.div>
   );
 };
