@@ -2,8 +2,10 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const Linchpins = ({ size }) => {
+  const description =
+    'Impactivists are Linchpins who work hard, smart, and long hours.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M30 75C30 99.8528 50.1472 120 75 120C99.8528 120 120 99.8528 120 75C120 50.1472 99.8528 30 75 30C50.1472 30 30 50.1472 30 75Z'
         strokeWidth='4'

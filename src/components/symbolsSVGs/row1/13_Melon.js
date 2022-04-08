@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const Melon = ({ size }) => {
+  const description = 'Well... IYKYK.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path d='M74.5 64.5L74.5 79' strokeWidth='4' />
       <motion.path d='M59.5 62L50.5 71' strokeWidth='4' />
       <motion.path d='M98.5 70L89.5 62' strokeWidth='4' />

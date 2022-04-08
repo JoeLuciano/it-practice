@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const Duality = ({ size }) => {
+  const description = 'Duality - the harmony of antagonistic forces.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M23 75.5C23 104.495 46.5051 128 75.5 128C104.495 128 128 104.495 128 75.5C128 46.5051 104.495 23 75.5 23C46.5051 23 23 46.5051 23 75.5Z'
         strokeWidth='4'

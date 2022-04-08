@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const Transformation = ({ size }) => {
+  const description = 'Transformation.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M20 63.5C20 80.897 34.103 95 51.5 95C68.897 95 83 80.897 83 63.5C83 46.103 68.897 32 51.5 32C34.103 32 20 46.103 20 63.5Z'
         strokeWidth='2'

@@ -2,8 +2,10 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const PassionCenter = ({ size }) => {
+  const description =
+    'Passion will help you keep fighting to reach your goals when things get difficult. Center your life around your passion.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M47.5 90.5C47.5 105.964 60.036 118.5 75.5 118.5C90.964 118.5 103.5 105.964 103.5 90.5C103.5 75.036 90.964 62.5 75.5 62.5C60.036 62.5 47.5 75.036 47.5 90.5Z'
         strokeWidth='4'

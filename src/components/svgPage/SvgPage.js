@@ -20,6 +20,9 @@ const svgPage = {
   },
 };
 
+// Create global context for which element is focused
+//   const [disableHoverChanges, setDisableHoverChanges] = useState(false);
+
 export const SvgPage = () => {
   return (
     <motion.div

@@ -15,9 +15,7 @@ const MiniSvg = (props) => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       style={{ height: '10rem', width: '10rem' }}
-      variants={miniVariants}
-      initial='hidden'
-      animate='visible'>
+      variants={miniVariants}>
       {props.children}
     </motion.svg>
   );
@@ -46,14 +44,13 @@ export const DescriptionBox = ({ description, x, y, svgPropsWithChildren }) => {
       x: xEnd,
       y: yEnd,
       opacity: 1,
-      zIndex: 1,
+      zIndex: 3,
       pointerEvents: 'auto',
       transition: { delay: 1, duration: 1 },
     },
   };
   return (
     <motion.div
-      key='modal'
       className={styles.descriptionContainer}
       variants={descriptionVariant}
       initial='hidden'

@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const TopPriority = ({ size }) => {
+  const description = 'Know your top priority.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M26 75.5C26 102.286 47.7142 124 74.5 124C101.286 124 123 102.286 123 75.5C123 48.7142 101.286 27 74.5 27C47.7142 27 26 48.7142 26 75.5Z'
         strokeWidth='2'

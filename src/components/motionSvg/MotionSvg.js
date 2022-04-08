@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
 import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
-  visible: { zIndex: 0, scale: 1 },
+  visible: { zIndex: 1, scale: 1 },
   focus: {
-    scale: 1.5,
-    zIndex: 20,
+    scale: [0.8, 1.5],
+    zIndex: 2,
+    transition: {
+      delayChildren: 2,
+      duration: 2,
+    },
   },
 };
 
@@ -35,8 +39,12 @@ function delay(time) {
 
 const HoverProgress = () => {
   const hoverProgressVariant = {
-    hidden: { scale: 1.4, pathLength: 0 },
-    visible: { scale: 1.4, pathLength: 1, transition: { duration: 1 } },
+    hidden: { scale: 0, pathLength: 0 },
+    visible: {
+      scale: 1,
+      pathLength: 1,
+      transition: { delay: 0.2, duration: 1 },
+    },
   };
   return (
     <motion.svg className={styles.hoverProgress} viewBox='0 0 150 150'>
@@ -60,6 +68,7 @@ export const MotionSvg = ({ size, description, ...props }) => {
   const [showDescription, setShowDescription] = useState(false);
   const [descriptionX, setDescriptionX] = useState();
   const [descriptionY, setDescriptionY] = useState();
+  const [disableHoverChanges, setDisableHoverChanges] = useState(false);
 
   const svgRef = useRef(null);
   useEffect(() => {
@@ -104,26 +113,41 @@ export const MotionSvg = ({ size, description, ...props }) => {
         ? {
             animate: controls,
             onHoverStart: () => {
-              controls.start('focus');
-              setShowDescription(true);
+              if (!disableHoverChanges) {
+                controls.start('focus');
+                setShowDescription(true);
+              }
             },
             onHoverEnd: () => {
-              controls.start('visible');
-              setShowDescription(false);
+              if (!disableHoverChanges) {
+                controls.start('visible');
+                setShowDescription(false);
+              }
+            },
+            onTap: () => {
+              setShowDescription((prev) => {
+                if (prev && disableHoverChanges) {
+                  setDisableHoverChanges(false);
+                  controls.start('visible');
+                  return false;
+                } else {
+                  setDisableHoverChanges(true);
+                  controls.start('focus');
+                  return true;
+                }
+              });
             },
           }
         : {})}>
-      <AnimatePresence>
-        {showDescription && <HoverProgress />}
-        {showDescription && (
-          <DescriptionBox
-            description={description}
-            x={descriptionX}
-            y={descriptionY}
-            svgPropsWithChildren={childrenWithProps}
-          />
-        )}
-      </AnimatePresence>
+      {showDescription && <HoverProgress />}
+      {showDescription && (
+        <DescriptionBox
+          description={description}
+          x={descriptionX}
+          y={descriptionY}
+          svgPropsWithChildren={childrenWithProps}
+        />
+      )}
 
       <motion.svg
         className={styles.svgComponent}

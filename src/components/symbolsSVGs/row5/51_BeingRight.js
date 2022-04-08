@@ -2,8 +2,10 @@ import { motion } from 'framer-motion';
 import { MotionSvg } from 'components/motionSvg/MotionSvg';
 
 export const BeingRight = ({ size }) => {
+  const description =
+    'Building your self-esteem around being right all the time will lead to poor decision-making.';
   return (
-    <MotionSvg size={size}>
+    <MotionSvg size={size} description={description}>
       <motion.path
         d='M21 83C21 103.987 38.0132 121 59 121C79.9868 121 97 103.987 97 83C97 62.0132 79.9868 45 59 45C38.0132 45 21 62.0132 21 83Z'
         strokeWidth='2'
