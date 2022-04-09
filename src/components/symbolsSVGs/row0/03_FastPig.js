@@ -5,7 +5,7 @@ export const FastPig = ({ size }) => {
   const description =
     "You can't make a racehorse out of a pig, but you can make a really fast pig.";
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='FastPig' size={size} description={description}>
       <motion.path
         d='M29.5 79.5C29.5 104.629 49.871 125 75 125C100.129 125 120.5 104.629 120.5 79.5C120.5 54.371 100.129 34 75 34C49.871 34 29.5 54.371 29.5 79.5Z'
         strokeWidth='3'

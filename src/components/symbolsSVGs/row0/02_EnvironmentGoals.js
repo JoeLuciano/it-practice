@@ -5,7 +5,7 @@ export const EnvironmentGoals = ({ size }) => {
   const description =
     'Only work in an environment that is moving you towards your goals.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='EnvironmentGoals' size={size} description={description}>
       <motion.rect
         x='26'
         y='32'

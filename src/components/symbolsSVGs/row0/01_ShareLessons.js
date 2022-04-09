@@ -5,7 +5,7 @@ export const ShareLessons = ({ size }) => {
   const description =
     'Share the lessons learned from your mistakes with your fellow Impactivists.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='ShareLessons' size={size} description={description}>
       <motion.rect
         x='25'
         y='22'

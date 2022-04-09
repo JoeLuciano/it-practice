@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const Focus = ({ size }) => {
   const description = '';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='Focus' size={size} description={description}>
       <motion.path
         d='M25 75C25 102.614 47.3858 125 75 125C102.614 125 125 102.614 125 75C125 47.3858 102.614 25 75 25C47.3858 25 25 47.3858 25 75Z'
         strokeWidth='4'

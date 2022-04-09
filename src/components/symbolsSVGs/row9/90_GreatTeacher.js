@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const GreatTeacher = ({ size }) => {
   const description = '';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='GreatTeacher' size={size} description={description}>
       <motion.path
         d='M131 22H20V127H131V22Z'
         strokeWidth='2'

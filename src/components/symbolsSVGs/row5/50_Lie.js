@@ -5,7 +5,7 @@ export const Lie = ({ size }) => {
   const description =
     "#5 is a lie. But it's an empowering lie. Impactivists do and believe that which empowers us.";
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='Lie' size={size} description={description}>
       <motion.path
         d='M27 75C27 101.51 48.4903 123 75 123C101.51 123 123 101.51 123 75C123 48.4903 101.51 27 75 27C48.4903 27 27 48.4903 27 75Z'
         strokeWidth='4'

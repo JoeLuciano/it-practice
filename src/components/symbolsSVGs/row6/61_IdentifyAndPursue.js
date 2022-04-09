@@ -5,7 +5,7 @@ export const IdentifyAndPursue = ({ size }) => {
   const description =
     'Build your self-esteem around identifying the right answer and pursuing it faster than anyone else.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='IdentifyAndPursue' size={size} description={description}>
       <motion.path
         d='M50.3008 32.2416L99.4301 32.1039L123.876 74.72L99.186 117.484L50.0566 117.621L25.6113 75.0051L50.3008 32.2416Z'
         strokeWidth='3'

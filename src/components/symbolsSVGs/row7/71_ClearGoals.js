@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const ClearGoals = ({ size }) => {
   const description = 'Have VERY clear goals.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='ClearGoals' size={size} description={description}>
       <motion.path
         d='M28 81C28 106.957 49.0426 128 75 128C100.957 128 122 106.957 122 81C122 55.0426 100.957 34 75 34C49.0426 34 28 55.0426 28 81Z'
         strokeWidth='4'

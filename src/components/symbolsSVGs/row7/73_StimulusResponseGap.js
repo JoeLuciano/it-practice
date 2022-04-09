@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const StimulusResponseGap = ({ size }) => {
   const description = 'Mind the gap between stimulus and response.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='StimulusResponseGap' size={size} description={description}>
       <motion.path
         d='M139 67H10V89H139V67Z'
         strokeWidth='3'

@@ -21,12 +21,12 @@ const svgPage = {
   },
 };
 
-export const HoverStatus = createContext(null);
+export const SelectedSymbol = createContext(null);
 
 export const SvgPage = () => {
-  const [isSymbolSelected, setIsSymbolSelected] = useState(false);
+  const [selectedSymbol, setSelectedSymbol] = useState(undefined);
   return (
-    <HoverStatus.Provider value={{ isSymbolSelected, setIsSymbolSelected }}>
+    <SelectedSymbol.Provider value={{ selectedSymbol, setSelectedSymbol }}>
       <motion.div
         className={styles.svgPage}
         variants={svgPage}
@@ -43,6 +43,6 @@ export const SvgPage = () => {
         <Row8 />
         <Row9 />
       </motion.div>
-    </HoverStatus.Provider>
+    </SelectedSymbol.Provider>
   );
 };

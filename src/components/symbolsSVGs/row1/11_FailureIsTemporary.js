@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const FailureIsTemporary = ({ size }) => {
   const description = 'Failure is temporary. Move quickly beyond it.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='FailureIsTemporary' size={size} description={description}>
       <motion.path
         d='M126 26H24V124H126V26Z'
         strokeWidth='2'

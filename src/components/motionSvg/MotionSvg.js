@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
-import { HoverStatus } from 'components/svgPage/SvgPage';
+import { SelectedSymbol } from 'components/svgPage/SvgPage';
 import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
@@ -11,7 +11,7 @@ const containerVariant = {
     zIndex: 2,
     transition: {
       delayChildren: 2,
-      duration: 2,
+      times: [0.3, 1],
     },
   },
 };
@@ -64,25 +64,30 @@ const HoverProgress = () => {
   );
 };
 
-export const MotionSvg = ({ size, description, ...props }) => {
+export const MotionSvg = ({ name, size, description, ...props }) => {
   const [allowHover, setAllowHover] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
   const [descriptionX, setDescriptionX] = useState();
   const [descriptionY, setDescriptionY] = useState();
 
-  const { isSymbolSelected, setIsSymbolSelected } = useContext(HoverStatus);
+  const { selectedSymbol, setSelectedSymbol } = useContext(SelectedSymbol);
 
   const svgRef = useRef(null);
+  const controls = useAnimation();
+  const svgSize = size ? size : '100%';
+
   useEffect(() => {
     function setDescriptionVariables() {
       const { x, y } = svgRef.current.getBoundingClientRect();
       setDescriptionX(x);
       setDescriptionY(y);
     }
-    if (showDescription) {
+    if (selectedSymbol === name) {
+      controls.start('focus');
       setDescriptionVariables();
+    } else {
+      controls.start('visible');
     }
-  }, [showDescription, svgRef]);
+  }, [selectedSymbol, name, svgRef, controls]);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     if (React.isValidElement(child)) {
@@ -102,9 +107,6 @@ export const MotionSvg = ({ size, description, ...props }) => {
     enableHover();
   }, []);
 
-  const controls = useAnimation();
-  const svgSize = size ? size : '100%';
-
   return (
     <motion.div
       ref={svgRef}
@@ -115,34 +117,26 @@ export const MotionSvg = ({ size, description, ...props }) => {
         ? {
             animate: controls,
             onHoverStart: () => {
-              if (!isSymbolSelected) {
+              if (!selectedSymbol) {
                 controls.start('focus');
-                setShowDescription(true);
               }
             },
             onHoverEnd: () => {
-              if (!isSymbolSelected) {
+              if (!selectedSymbol) {
                 controls.start('visible');
-                setShowDescription(false);
               }
             },
             onTap: () => {
-              setShowDescription((prev) => {
-                if (prev && isSymbolSelected) {
-                  setIsSymbolSelected(false);
-                  controls.start('visible');
-                  return false;
-                } else if (!isSymbolSelected) {
-                  setIsSymbolSelected(true);
-                  controls.start('focus');
-                  return true;
-                }
-              });
+              if (!selectedSymbol) {
+                setSelectedSymbol(name);
+              } else if (selectedSymbol !== name) {
+                setSelectedSymbol(undefined);
+              }
             },
           }
         : {})}>
-      {showDescription && <HoverProgress />}
-      {showDescription && (
+      {selectedSymbol === name && <HoverProgress />}
+      {selectedSymbol === name && (
         <DescriptionBox
           description={description}
           x={descriptionX}

@@ -5,7 +5,7 @@ export const BestYou = ({ size }) => {
   const description =
     'See beyond your current self to the opportunity of becoming the best version of yourself.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='BestYou' size={size} description={description}>
       <motion.path
         d='M75.5 24L18 125H133L75.5 24Z'
         strokeWidth='4'

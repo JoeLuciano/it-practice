@@ -4,7 +4,7 @@ import { MotionSvg } from 'components/motionSvg/MotionSvg';
 export const Sacred = ({ size }) => {
   const description = 'The transition from the mundane to the sacred.';
   return (
-    <MotionSvg size={size} description={description}>
+    <MotionSvg name='Sacred' size={size} description={description}>
       <motion.path
         d='M123.5 21H27.5V117H123.5V21Z'
         strokeWidth='2'
