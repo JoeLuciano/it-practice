@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import styles from './MotionSvg.module.css';
+import { HoverStatus } from 'components/svgPage/SvgPage';
 import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
@@ -68,7 +69,8 @@ export const MotionSvg = ({ size, description, ...props }) => {
   const [showDescription, setShowDescription] = useState(false);
   const [descriptionX, setDescriptionX] = useState();
   const [descriptionY, setDescriptionY] = useState();
-  const [disableHoverChanges, setDisableHoverChanges] = useState(false);
+
+  const { isSymbolSelected, setIsSymbolSelected } = useContext(HoverStatus);
 
   const svgRef = useRef(null);
   useEffect(() => {
@@ -113,25 +115,25 @@ export const MotionSvg = ({ size, description, ...props }) => {
         ? {
             animate: controls,
             onHoverStart: () => {
-              if (!disableHoverChanges) {
+              if (!isSymbolSelected) {
                 controls.start('focus');
                 setShowDescription(true);
               }
             },
             onHoverEnd: () => {
-              if (!disableHoverChanges) {
+              if (!isSymbolSelected) {
                 controls.start('visible');
                 setShowDescription(false);
               }
             },
             onTap: () => {
               setShowDescription((prev) => {
-                if (prev && disableHoverChanges) {
-                  setDisableHoverChanges(false);
+                if (prev && isSymbolSelected) {
+                  setIsSymbolSelected(false);
                   controls.start('visible');
                   return false;
-                } else {
-                  setDisableHoverChanges(true);
+                } else if (!isSymbolSelected) {
+                  setIsSymbolSelected(true);
                   controls.start('focus');
                   return true;
                 }

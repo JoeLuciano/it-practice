@@ -1,3 +1,4 @@
+import { useState, createContext } from 'react';
 import { motion } from 'framer-motion';
 import styles from './SvgPage.module.css';
 
@@ -20,26 +21,28 @@ const svgPage = {
   },
 };
 
-// Create global context for which element is focused
-//   const [disableHoverChanges, setDisableHoverChanges] = useState(false);
+export const HoverStatus = createContext(null);
 
 export const SvgPage = () => {
+  const [isSymbolSelected, setIsSymbolSelected] = useState(false);
   return (
-    <motion.div
-      className={styles.svgPage}
-      variants={svgPage}
-      initial='hidden'
-      animate='visible'>
-      <Row0 />
-      <Row1 />
-      <Row2 />
-      <Row3 />
-      <Row4 />
-      <Row5 />
-      <Row6 />
-      <Row7 />
-      <Row8 />
-      <Row9 />
-    </motion.div>
+    <HoverStatus.Provider value={{ isSymbolSelected, setIsSymbolSelected }}>
+      <motion.div
+        className={styles.svgPage}
+        variants={svgPage}
+        initial='hidden'
+        animate='visible'>
+        <Row0 />
+        <Row1 />
+        <Row2 />
+        <Row3 />
+        <Row4 />
+        <Row5 />
+        <Row6 />
+        <Row7 />
+        <Row8 />
+        <Row9 />
+      </motion.div>
+    </HoverStatus.Provider>
   );
 };
