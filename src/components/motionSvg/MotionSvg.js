@@ -94,18 +94,18 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
   const svgSize = size ? size : '100%';
 
   useEffect(() => {
-    function setDescriptionVariables() {
-      const { x, y } = svgRef.current.getBoundingClientRect();
-      setDescriptionX(x);
-      setDescriptionY(y);
-    }
+    const { x, y } = svgRef.current.getBoundingClientRect();
+    setDescriptionX(x);
+    setDescriptionY(y);
+  }, [svgRef]);
+
+  useEffect(() => {
     if (selectedSymbol === name) {
       controls.start('clicked');
-      setDescriptionVariables();
     } else {
       controls.start('visible');
     }
-  }, [selectedSymbol, name, svgRef, controls]);
+  }, [selectedSymbol, name, controls]);
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     if (React.isValidElement(child)) {
