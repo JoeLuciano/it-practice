@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { Anything } from './40_Anything';
 import { OvercomeObstacles } from './41_OvercomeObstacles';
 import { PhysicsOfProgress } from './42_PhysicsOfProgress';

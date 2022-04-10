@@ -1,7 +1,8 @@
-import { RowLocation } from 'components/svgRow/SvgRow';
+import { RowLocation } from 'components/svgPage/svgRow/SvgRow';
 import { motion } from 'framer-motion';
 import styles from './DescriptionBox.module.css';
 import { useContext, useRef, useEffect, useState } from 'react';
+import { PurchaseSymbolButton } from 'components/openseaButtons/purchaseSymbolButton/PurchaseSymbolButton';
 
 const MiniSvg = (props) => {
   const miniVariants = {
@@ -21,6 +22,10 @@ const MiniSvg = (props) => {
       {props.children}
     </motion.svg>
   );
+};
+
+const Fullscreen = () => {
+  return <motion.button>Fullscreen</motion.button>;
 };
 
 export const DescriptionBox = ({
@@ -92,8 +97,6 @@ export const DescriptionBox = ({
     },
   };
 
-  const openseaUrl = `https://opensea.io/collection/impact-theory-founders-key?search[stringTraits][0][name]=Symbol%20%231&search[stringTraits][0][values][0]=B1%3A%20${name}`;
-
   return (
     <motion.div
       ref={containerRef}
@@ -101,12 +104,14 @@ export const DescriptionBox = ({
       variants={descriptionVariant}
       initial='hidden'
       animate='visible'>
-      <motion.div ref={descriptionRef} className={styles.descriptionMessage}>
-        <motion.a href={openseaUrl} target='blank'>
-          Opensea
-        </motion.a>
+      <motion.div
+        ref={descriptionRef}
+        className={styles.descriptionMessageContainer}>
+        <motion.h1 className={styles.descriptionHeader}>{name}</motion.h1>
         <MiniSvg>{svgPropsWithChildren}</MiniSvg>
-        <motion.h3>{description}</motion.h3>
+        <motion.p className={styles.descriptionMessage}>{description}</motion.p>
+        <PurchaseSymbolButton symbolName={name} />
+        <Fullscreen />
       </motion.div>
     </motion.div>
   );

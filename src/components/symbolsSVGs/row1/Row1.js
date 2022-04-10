@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { PersonalGrowth } from './10_PersonalGrowth';
 import { FailureIsTemporary } from './11_FailureIsTemporary';
 import { Linchpins } from './12_Linchpins';

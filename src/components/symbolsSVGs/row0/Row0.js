@@ -3,7 +3,7 @@ import { ShareLessons } from './01_ShareLessons';
 import { EnvironmentGoals } from './02_EnvironmentGoals';
 import { FastPig } from './03_FastPig';
 import { Passion } from './04_Passion';
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 
 export const Row0 = () => {
   return (

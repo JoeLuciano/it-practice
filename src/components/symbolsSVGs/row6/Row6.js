@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { BecomeThat } from './60_BecomeThat';
 import { IdentifyAndPursue } from './61_IdentifyAndPursue';
 import { ForceOfNature } from './62_ForceOfNature';

@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { Focus } from './30_Focus';
 import { NoExcuses } from './31_NoExcuses';
 import { MotivateAndInspire } from './32_MotivateAndInspire';

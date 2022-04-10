@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { SafeCommunity } from './80_SafeCommunity';
 import { MoveToGoals } from './81_MoveToGoals';
 import { YouAreInControl } from './82_YouAreInControl';

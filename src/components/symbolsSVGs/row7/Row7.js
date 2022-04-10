@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { BestYou } from './70_BestYou';
 import { ClearGoals } from './71_ClearGoals';
 import { NorthStar } from './72_NorthStar';

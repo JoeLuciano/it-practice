@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { Lie } from './50_Lie';
 import { BeingRight } from './51_BeingRight';
 import { Love } from './52_Love';

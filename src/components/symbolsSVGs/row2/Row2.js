@@ -1,4 +1,4 @@
-import { SvgRow } from 'components/svgRow/SvgRow';
+import { SvgRow } from 'components/svgPage/svgRow/SvgRow';
 import { NewSkills } from './20_NewSkills';
 import { Learn } from './21_Learn';
 import { PassionCenter } from './22_PassionCenter';
