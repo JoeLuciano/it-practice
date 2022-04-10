@@ -21,14 +21,20 @@ const MiniSvg = (props) => {
   );
 };
 
-export const DescriptionBox = ({ description, x, y, svgPropsWithChildren }) => {
+export const DescriptionBox = ({
+  name,
+  description,
+  x,
+  y,
+  svgPropsWithChildren,
+}) => {
   const width = window.innerWidth;
   const height = window.innerHeight;
   const xStart = '-50%';
   const yStart = '-50%';
-  const BoxShift = '150%';
-  const xMovement = x > width / 2 ? `-${BoxShift}` : `${BoxShift}`;
-  const yMovement = y > height / 2 ? `-${BoxShift}` : `${BoxShift}`;
+  const BoxShift = 25;
+  const xMovement = x > width / 2 ? `-${BoxShift}%` : `${BoxShift}%`;
+  const yMovement = y > height / 2 ? `-${10 * BoxShift}%` : `${10 * BoxShift}%`;
   const xEnd = `calc(${xStart} + ${xMovement})`;
   const yEnd = `calc(${yStart} + ${yMovement})`;
 
@@ -49,6 +55,9 @@ export const DescriptionBox = ({ description, x, y, svgPropsWithChildren }) => {
       transition: { delay: 1, duration: 1 },
     },
   };
+
+  const openseaUrl = `https://opensea.io/collection/impact-theory-founders-key?search[stringTraits][0][name]=Symbol%20%231&search[stringTraits][0][values][0]=B1%3A%20${name}`;
+
   return (
     <motion.div
       className={styles.descriptionContainer}
@@ -56,6 +65,9 @@ export const DescriptionBox = ({ description, x, y, svgPropsWithChildren }) => {
       initial='hidden'
       animate='visible'>
       <motion.div className={styles.descriptionMessage}>
+        <motion.a href={openseaUrl} target='blank'>
+          Opensea
+        </motion.a>
         <MiniSvg>{svgPropsWithChildren}</MiniSvg>
         <motion.h3>{description}</motion.h3>
       </motion.div>

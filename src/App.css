@@ -1,5 +1,6 @@
 :root {
-  --dark-background: #101f2c
+  --dark-background: #101f2c;
+  --light-background: #1060a1;
 }
 
 .app {

@@ -1,6 +1,8 @@
 .svgContainer {
     position: relative;
     margin: .5rem;
+    cursor: pointer;
+    background-color:var(--dark-background);
 }
 
 .svgComponent {

@@ -5,13 +5,31 @@ import { SelectedSymbol } from 'components/svgPage/SvgPage';
 import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
-  visible: { zIndex: 1, scale: 1 },
+  visible: {
+    borderRadius: '20%',
+    zIndex: 1,
+    scale: 1,
+    backgroundColor: 'var(--dark-background)',
+  },
   focus: {
-    scale: [0.8, 1.5],
+    borderRadius: '20%',
+    scale: [1, 0.9, 1.2],
     zIndex: 2,
+    backgroundColor: 'var(--light-background)',
     transition: {
       delayChildren: 2,
-      times: [0.3, 1],
+      scale: { duration: 1 },
+      times: [0, 0.1, 1],
+    },
+  },
+  clicked: {
+    borderRadius: '20%',
+    scale: 1.2,
+    zIndex: 3,
+    backgroundColor: 'var(--dark-background)',
+    transition: {
+      delayChildren: 2,
+      scale: { duration: 1 },
     },
   },
 };
@@ -82,7 +100,7 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
       setDescriptionY(y);
     }
     if (selectedSymbol === name) {
-      controls.start('focus');
+      controls.start('clicked');
       setDescriptionVariables();
     } else {
       controls.start('visible');
@@ -108,36 +126,10 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
   }, []);
 
   return (
-    <motion.div
-      ref={svgRef}
-      className={styles.svgContainer}
-      style={{ height: svgSize, width: svgSize }}
-      variants={containerVariant}
-      {...(allowHover
-        ? {
-            animate: controls,
-            onHoverStart: () => {
-              if (!selectedSymbol) {
-                controls.start('focus');
-              }
-            },
-            onHoverEnd: () => {
-              if (!selectedSymbol) {
-                controls.start('visible');
-              }
-            },
-            onTap: () => {
-              if (!selectedSymbol) {
-                setSelectedSymbol(name);
-              } else if (selectedSymbol !== name) {
-                setSelectedSymbol(undefined);
-              }
-            },
-          }
-        : {})}>
-      {selectedSymbol === name && <HoverProgress />}
+    <>
       {selectedSymbol === name && (
         <DescriptionBox
+          name={name}
           description={description}
           x={descriptionX}
           y={descriptionY}
@@ -145,16 +137,48 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
         />
       )}
 
-      <motion.svg
-        className={styles.svgComponent}
-        width='150'
-        height='150'
-        viewBox='0 0 150 150'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        style={{ height: 'inherit', width: 'inherit' }}>
-        {childrenWithProps}
-      </motion.svg>
-    </motion.div>
+      <motion.div
+        ref={svgRef}
+        className={styles.svgContainer}
+        style={{ height: svgSize, width: svgSize }}
+        variants={containerVariant}
+        {...(allowHover
+          ? {
+              animate: controls,
+              onHoverStart: () => {
+                if (selectedSymbol !== name) {
+                  controls.start('focus');
+                }
+              },
+              onHoverEnd: () => {
+                if (selectedSymbol !== name) {
+                  controls.start('visible');
+                }
+              },
+              onTap: () => {
+                if (!selectedSymbol) {
+                  setSelectedSymbol(name);
+                } else if (selectedSymbol !== name) {
+                  setSelectedSymbol(name);
+                } else if (selectedSymbol === name) {
+                  setSelectedSymbol(undefined);
+                }
+              },
+            }
+          : {})}>
+        {selectedSymbol === name && <HoverProgress />}
+
+        <motion.svg
+          className={styles.svgComponent}
+          width='150'
+          height='150'
+          viewBox='0 0 150 150'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+          style={{ height: 'inherit', width: 'inherit' }}>
+          {childrenWithProps}
+        </motion.svg>
+      </motion.div>
+    </>
   );
 };
