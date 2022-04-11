@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, LayoutGroup } from 'framer-motion';
 import styles from './MotionSvg.module.css';
-import { SelectedSymbol } from 'components/svgPage/SvgPage';
+import { DoAnimation, SelectedSymbol } from 'components/svgPage/SvgPage';
 import { DescriptionBox } from './descriptionBox/DescriptionBox';
 
 const containerVariant = {
@@ -65,11 +65,13 @@ const HoverProgress = () => {
       transition: { delay: 0.2, duration: 1 },
     },
   };
+
+  const { doAnimation } = useContext(DoAnimation);
   return (
     <motion.svg className={styles.hoverProgress} viewBox='0 0 150 150'>
       <motion.path
         variants={hoverProgressVariant}
-        initial='hidden'
+        {...(doAnimation ? { initial: 'hidden' } : { initial: 'visible' })}
         animate='visible'
         fill='black'
         d='M23 75.5C23 103.943 46.0573 127 74.5 127C102.943 127 126 103.943 126 75.5C126 47.0573 102.943 24 74.5 24C46.0573 24 23 47.0573 23 75.5Z'
@@ -83,11 +85,23 @@ const HoverProgress = () => {
 };
 
 export const MotionSvg = ({ name, size, description, ...props }) => {
-  const [allowHover, setAllowHover] = useState(false);
-  const [descriptionX, setDescriptionX] = useState();
-  const [descriptionY, setDescriptionY] = useState();
+  const { doAnimation } = useContext(DoAnimation);
+  const [allowHover, setAllowHover] = useState(!doAnimation);
+
+  const [descriptionX, setDescriptionX] = useState(
+    localStorage.getItem('lastDescriptionX')
+  );
+  const [descriptionY, setDescriptionY] = useState(
+    localStorage.getItem('lastDescriptionY')
+  );
 
   const { selectedSymbol, setSelectedSymbol } = useContext(SelectedSymbol);
+
+  useEffect(() => {
+    if (selectedSymbol === name) {
+      localStorage.clear();
+    }
+  }, [selectedSymbol, name]);
 
   const svgRef = useRef(null);
   const controls = useAnimation();
@@ -128,13 +142,15 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
   return (
     <>
       {selectedSymbol === name && (
-        <DescriptionBox
-          name={name}
-          description={description}
-          x={descriptionX}
-          y={descriptionY}
-          svgPropsWithChildren={childrenWithProps}
-        />
+        <LayoutGroup id='symbolDescriptionFullscreen'>
+          <DescriptionBox
+            name={name}
+            description={description}
+            x={descriptionX}
+            y={descriptionY}
+            svgPropsWithChildren={childrenWithProps}
+          />
+        </LayoutGroup>
       )}
 
       <motion.div

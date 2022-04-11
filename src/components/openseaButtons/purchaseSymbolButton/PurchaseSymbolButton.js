@@ -38,17 +38,18 @@ const buttonVariant = {
 };
 
 // https://docs.opensea.io/docs/logos
-export const PurchaseSymbolButton = ({ symbolName }) => {
+export const PurchaseSymbolButton = ({ symbolName, doAnimate = true }) => {
   const itfkUrl = 'https://opensea.io/collection/impact-theory-founders-key';
   const openseaUrl = `${itfkUrl}?search[stringTraits][0][name]=Symbol%20%231&search[stringTraits][0][values][0]=B1%3A%20${symbolName}`;
 
   return (
     <motion.a
+      layoutId={`opensea${symbolName}`}
       className={styles.anchorButton}
       href={openseaUrl}
       target='blank'
       variants={buttonVariant}
-      initial='hidden'
+      initial={doAnimate ? 'hidden' : 'visible'}
       animate='visible'>
       <OpenseaSvg />
     </motion.a>

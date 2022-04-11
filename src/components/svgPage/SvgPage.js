@@ -22,27 +22,33 @@ const svgPage = {
 };
 
 export const SelectedSymbol = createContext(null);
+export const DoAnimation = createContext(null);
 
 export const SvgPage = () => {
-  const [selectedSymbol, setSelectedSymbol] = useState(undefined);
+  const [selectedSymbol, setSelectedSymbol] = useState(
+    localStorage.getItem('lastSelectedSymbol')
+  );
+  const doAnimation = !Boolean(localStorage.getItem('lastSelectedSymbol'));
   return (
     <SelectedSymbol.Provider value={{ selectedSymbol, setSelectedSymbol }}>
-      <motion.div
-        className={styles.svgPage}
-        variants={svgPage}
-        initial='hidden'
-        animate='visible'>
-        <Row0 />
-        <Row1 />
-        <Row2 />
-        <Row3 />
-        <Row4 />
-        <Row5 />
-        <Row6 />
-        <Row7 />
-        <Row8 />
-        <Row9 />
-      </motion.div>
+      <DoAnimation.Provider value={{ doAnimation }}>
+        <motion.div
+          className={styles.svgPage}
+          variants={svgPage}
+          {...(doAnimation ? { initial: 'hidden' } : { initial: 'visible' })}
+          animate='visible'>
+          <Row0 />
+          <Row1 />
+          <Row2 />
+          <Row3 />
+          <Row4 />
+          <Row5 />
+          <Row6 />
+          <Row7 />
+          <Row8 />
+          <Row9 />
+        </motion.div>
+      </DoAnimation.Provider>
     </SelectedSymbol.Provider>
   );
 };

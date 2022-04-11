@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import { RowLocation } from 'components/svgPage/svgRow/SvgRow';
 import { motion } from 'framer-motion';
 import styles from './DescriptionBox.module.css';
 import { useContext, useRef, useEffect, useState } from 'react';
+import { DoAnimation } from 'components/svgPage/SvgPage';
 import { PurchaseSymbolButton } from 'components/openseaButtons/purchaseSymbolButton/PurchaseSymbolButton';
 
 const MiniSvg = (props) => {
@@ -24,10 +26,6 @@ const MiniSvg = (props) => {
   );
 };
 
-const Fullscreen = () => {
-  return <motion.button>Fullscreen</motion.button>;
-};
-
 export const DescriptionBox = ({
   name,
   description,
@@ -35,6 +33,7 @@ export const DescriptionBox = ({
   y,
   svgPropsWithChildren,
 }) => {
+  const { doAnimation } = useContext(DoAnimation);
   const { rowX, rowY } = useContext(RowLocation);
 
   const [containerHeight, setContainerHeight] = useState(0);
@@ -68,6 +67,7 @@ export const DescriptionBox = ({
 
   const width = window.innerWidth;
   const height = window.innerHeight;
+
   const xMovement =
     x > width / 2
       ? moveLeft
@@ -95,6 +95,19 @@ export const DescriptionBox = ({
       pointerEvents: 'auto',
       transition: { delay: 1, duration: 1 },
     },
+    returnFromFullscreen: {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      zIndex: 3,
+      pointerEvents: 'auto',
+    },
+  };
+
+  const saveDescriptionInfo = () => {
+    localStorage.setItem('lastDescriptionX', x);
+    localStorage.setItem('lastDescriptionY', y);
+    localStorage.setItem('lastSelectedSymbol', name);
   };
 
   return (
@@ -102,16 +115,21 @@ export const DescriptionBox = ({
       ref={containerRef}
       className={styles.descriptionContainer}
       variants={descriptionVariant}
-      initial='hidden'
-      animate='visible'>
+      {...(doAnimation
+        ? { initial: 'hidden' }
+        : { initial: 'returnFromFullscreen' })}
+      animate='visible'
+      layoutId={name}>
       <motion.div
         ref={descriptionRef}
         className={styles.descriptionMessageContainer}>
         <motion.h1 className={styles.descriptionHeader}>{name}</motion.h1>
         <MiniSvg>{svgPropsWithChildren}</MiniSvg>
         <motion.p className={styles.descriptionMessage}>{description}</motion.p>
-        <PurchaseSymbolButton symbolName={name} />
-        <Fullscreen />
+        <PurchaseSymbolButton symbolName={name} doAnimate={doAnimation} />
+        <Link to={name} onClick={() => saveDescriptionInfo()}>
+          Fullscreen
+        </Link>
       </motion.div>
     </motion.div>
   );
