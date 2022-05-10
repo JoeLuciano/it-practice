@@ -52,10 +52,6 @@ const draw = {
   },
 };
 
-function delay(time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
 const HoverProgress = () => {
   const hoverProgressVariant = {
     hidden: { scale: 0, pathLength: 0 },
@@ -132,13 +128,16 @@ export const MotionSvg = ({ name, size, description, ...props }) => {
   });
 
   useEffect(() => {
+    function delay(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
     async function enableHover() {
       await delay(3000);
       setAllowHover(true);
     }
     enableHover();
   }, []);
-
+  console.log('test');
   return (
     <>
       {selectedSymbol === name && (

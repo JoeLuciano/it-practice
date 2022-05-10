@@ -1,30 +1,11 @@
 import { Link } from 'react-router-dom';
 import { RowLocation } from 'components/svgPage/svgRow/SvgRow';
 import { motion } from 'framer-motion';
-import styles from './DescriptionBox.module.css';
 import { useContext, useRef, useEffect, useState } from 'react';
 import { DoAnimation } from 'components/svgPage/SvgPage';
 import { PurchaseSymbolButton } from 'components/openseaButtons/purchaseSymbolButton/PurchaseSymbolButton';
-
-const MiniSvg = (props) => {
-  const miniVariants = {
-    hidden: {},
-    visible: { transition: { delayChildren: 2 } },
-  };
-  return (
-    <motion.svg
-      className={styles.svgComponent}
-      width='150'
-      height='150'
-      viewBox='0 0 150 150'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      style={{ height: '10rem', width: '10rem' }}
-      variants={miniVariants}>
-      {props.children}
-    </motion.svg>
-  );
-};
+import { DynamicSymbolSvg } from 'components/dynamicSymbolSvg/DynamicSymbolSvg';
+import styles from './DescriptionBox.module.css';
 
 export const DescriptionBox = ({
   name,
@@ -55,8 +36,11 @@ export const DescriptionBox = ({
     setDescriptionWidth(width);
   }, [descriptionRef]);
 
-  const absoluteX = x - rowX;
-  const absoluteY = y - rowY;
+  const thisRowX = rowX === 0 ? localStorage.getItem('lastRowX') : rowX;
+  const thisRowY = rowY === 0 ? localStorage.getItem('lastRowY') : rowY;
+
+  const absoluteX = x - thisRowX;
+  const absoluteY = y - thisRowY;
 
   const moveCenter = containerHeight / 2;
   const moveRight = descriptionWidth / 3 + containerHeight / 2;
@@ -91,23 +75,26 @@ export const DescriptionBox = ({
       x: xFinal,
       y: yFinal,
       opacity: 1,
-      zIndex: 3,
+      zIndex: 4,
       pointerEvents: 'auto',
       transition: { delay: 1, duration: 1 },
     },
     returnFromFullscreen: {
-      x: 0,
-      y: 0,
+      x: xFinal,
+      y: yFinal,
       opacity: 1,
-      zIndex: 3,
+      zIndex: 4,
       pointerEvents: 'auto',
     },
   };
 
   const saveDescriptionInfo = () => {
+    localStorage.setItem('lastRowX', thisRowX);
+    localStorage.setItem('lastRowY', thisRowY);
     localStorage.setItem('lastDescriptionX', x);
     localStorage.setItem('lastDescriptionY', y);
     localStorage.setItem('lastSelectedSymbol', name);
+    localStorage.setItem('lastSelectedSymbolSvgProps', svgPropsWithChildren);
   };
 
   return (
@@ -118,13 +105,13 @@ export const DescriptionBox = ({
       {...(doAnimation
         ? { initial: 'hidden' }
         : { initial: 'returnFromFullscreen' })}
-      animate='visible'
-      layoutId={name}>
+      animate='visible'>
       <motion.div
+        layoutId={`${name}DescriptionContainer`}
         ref={descriptionRef}
         className={styles.descriptionMessageContainer}>
         <motion.h1 className={styles.descriptionHeader}>{name}</motion.h1>
-        <MiniSvg>{svgPropsWithChildren}</MiniSvg>
+        <DynamicSymbolSvg>{svgPropsWithChildren}</DynamicSymbolSvg>
         <motion.p className={styles.descriptionMessage}>{description}</motion.p>
         <PurchaseSymbolButton symbolName={name} doAnimate={doAnimation} />
         <Link to={name} onClick={() => saveDescriptionInfo()}>

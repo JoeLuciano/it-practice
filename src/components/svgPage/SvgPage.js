@@ -28,7 +28,9 @@ export const SvgPage = () => {
   const [selectedSymbol, setSelectedSymbol] = useState(
     localStorage.getItem('lastSelectedSymbol')
   );
+
   const doAnimation = !Boolean(localStorage.getItem('lastSelectedSymbol'));
+
   return (
     <SelectedSymbol.Provider value={{ selectedSymbol, setSelectedSymbol }}>
       <DoAnimation.Provider value={{ doAnimation }}>
